@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/secret-agent-terminal/"
+title = "Secret Agent Hacker Terminal & Mini-Game"
+description = "A beginner-friendly, single-file browser terminal simulation for a college AI Coding Lab, with animated Matrix-style visuals, fictional security scans, and a cipher puzzle. No backend or real hacking functionality."
+version = "1.0.0"
+id = "artifacts/secret-agent-terminal"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/secret-agent-terminal/" ]
+localPort = 19417
+
+[services.development]
+run = "pnpm --filter @workspace/secret-agent-terminal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/secret-agent-terminal", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/secret-agent-terminal/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19417"
+BASE_PATH = "/secret-agent-terminal/"
